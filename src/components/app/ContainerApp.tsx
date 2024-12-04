@@ -1,11 +1,11 @@
-import { Header, Footer, ListProducts } from "@/components"
+import { Header, Footer, ContainerProduct } from "@/components"
 
 export const ContainerApp = () => {
     return (
-        <div className="h-screen grid grid-rows-[10%_1fr_10%]">
+        <div className="h-screen grid grid-rows-[10%_80%_10%]">
             <Header />
-            <div className="overflow-auto">
-                <ListProducts />
+            <div className="bg-white">
+                <ContainerProduct />
             </div>
             <Footer />
         </div>

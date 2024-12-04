@@ -3,3 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #5d04d9;
+    overflow: hidden;
+}
+
+.myinput {
+    @apply h-7 w-full bg-transparent border-b-[1px] border-gray-400 outline-none focus:outline-none focus:border-b-[1px]
+}
+
+.myspan {
+    @apply text-red-300
+}
