@@ -1,30 +1,28 @@
 'use client'
 import { Modal, FormAdd, FormDelete } from '@/components';
-import { useState } from 'react'
 import { MdBookmarkAdd, MdDeleteSweep, } from "react-icons/md";
-
+import { useModalStore } from '@/stores'
 
 export const MenuProducts = () => {
-    const [viewAdd, setViewAdd] = useState<boolean>()
-    const [viewDelete, setViewDelete] = useState<boolean>()
-
-    const toggleAddProduct = () => setViewAdd(!viewAdd)
-    const toggleDeleteProduct = () => setViewDelete(!viewDelete)
+    const { isAddModalOpen, isDeleteModalOpen,
+        toggleAddModal, toggleDeleteModal } = useModalStore()
 
     return (
         <div className="flex justify-center items-center gap-5">
-            <MdBookmarkAdd fill="#f9f9f9" size={30} onClick={toggleAddProduct} />
-            <MdDeleteSweep fill="#f9f9f9" size={30} onClick={toggleDeleteProduct} />
+            <MdBookmarkAdd fill="#f9f9f9" size={30} onClick={toggleAddModal} />
+            <MdDeleteSweep fill="#f9f9f9" size={30} onClick={toggleDeleteModal} />
             {
-                viewAdd && (<Modal isOpen={viewAdd} onClose={toggleAddProduct}
+                isAddModalOpen && (<Modal isOpen={isAddModalOpen} onClose={toggleAddModal}
                     title='Agregar productos'>
                     <FormAdd />
                 </Modal>)
             }
-            {viewDelete && (<Modal isOpen={viewDelete} onClose={toggleDeleteProduct}
-                title='Borrar todos'>
-                <FormDelete onClose={toggleDeleteProduct} />
-            </Modal>)}
+            {
+                isDeleteModalOpen && (<Modal isOpen={isDeleteModalOpen} onClose={toggleDeleteModal}
+                    title='Borrar todos'>
+                    <FormDelete onClose={toggleDeleteModal} />
+                </Modal>)
+            }
         </div>
     )
 }

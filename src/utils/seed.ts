@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { addProduct, clearProduct } from '@/utils'
+import { useProductStore } from '@/stores'
+import { useModalStore } from '@/stores'
 
 interface Producto {
     id: string
@@ -7,6 +9,7 @@ interface Producto {
     price: number
     url: string
 }
+
 
 const generativeProduct = (): Producto => {
     return {
@@ -20,17 +23,20 @@ const generativeProduct = (): Producto => {
     }
 }
 
-
 const arrayProducts = (count: number): Producto[] => {
     return Array.from({ length: count }, generativeProduct)
 }
 
 export const seedData = async () => {
+    'use client'
+    const { toggleAddModal } = useModalStore()
+
     await clearProduct()
     const data = arrayProducts(100)
     for (const product of data) {
         await addProduct(product)
     }
     console.log('Seed data completed')
-    window.location.reload()
+    toggleAddModal()
+    useProductStore.getState().refreshProducts()
 }

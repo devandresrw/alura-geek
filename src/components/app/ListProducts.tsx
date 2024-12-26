@@ -1,30 +1,13 @@
 'use client'
-import { useState, useEffect } from 'react'
 import { CardProduct } from '@/components'
-import { getAllProducts, deleteProduct } from '@/utils'
-
-interface Product {
-    id: number;         // El identificador único de cada producto (puede ser auto-incrementado por IndexedDB)
-    name: string;       // Nombre del producto
-    price: number;      // Precio del producto
-    url: string;        // URL de la imagen del producto
-}
+import { deleteProduct } from '@/utils'
+import { useProductStore } from '@/stores'
 
 export const ListProducts = () => {
-    const [products, setProducts] = useState<Product[]>([])
+    const { products } = useProductStore()
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const data = await getAllProducts()
-            setProducts(data)
-        }
-
-        fetchProducts()
-    }, [])
-
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: string) => {
         await deleteProduct(id)
-        setProducts(products.filter(product => product.id !== id))
     }
 
     return (
@@ -32,8 +15,9 @@ export const ListProducts = () => {
         overflow-y-auto'>
             <div className="grid grid-cols-1 gap-4 
                 sm:grid-cols-3 lg:grid-cols-5 p-5">
-                {products.map((product, index) => (
-                    <CardProduct key={product.id}
+                {products.map((product) => (
+                    <CardProduct
+                        key={product.id}
                         id={product.id}
                         name={product.name}
                         price={product.price}

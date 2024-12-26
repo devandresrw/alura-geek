@@ -2,11 +2,11 @@ import Image from "next/image"
 import { MdDelete } from "react-icons/md";
 
 interface CardProductProps {
-    id: number
+    id: string
     name: string;
     price: number;
     url: string;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void;
 }
 
 export const CardProduct = ({ ...props }: CardProductProps) => {

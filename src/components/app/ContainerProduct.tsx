@@ -1,24 +1,19 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { ListProducts, NotProducts } from "@/components"
-import { getAllProducts } from '@/utils'
-
+import { useProductStore } from '@/stores'
 
 export const ContainerProduct = () => {
-    const [hasProducts, setHasProduct] = useState(false)
+    const { products, refreshProducts } = useProductStore()
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            const products = await getAllProducts()
-            setHasProduct(products.length > 0)
-        }
-        fetchProducts()
+        refreshProducts()
     }, [])
 
     return (
         <div className='h-full flex flex-col justify-center items-center
         '>
-            {hasProducts ? <ListProducts /> : <NotProducts />}
+            {products.length > 0 ? <ListProducts /> : <NotProducts />}
         </div>
     )
 }
